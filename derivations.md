@@ -61,7 +61,7 @@ $$
 $$
 H_N=-\lambda\sum_{i=1}^{N}\nabla_i^2
     +\sum_{i=1}^{N}V_{\mathrm{ext}}(\mathbf r_i)
-    +\sum_{1\le i<k\le N}U_L(\mathbf r_i-\mathbf r_k).
+    +\sum_{1\le i\lt k\le N}U_L(\mathbf r_i-\mathbf r_k).
 $$
 
 构型 $\mathbf R=(\mathbf r_1,\ldots,\mathbf r_N)$ 的总势能为
@@ -69,7 +69,7 @@ $$
 $$
 V(\mathbf R)
 =\sum_i V_{\mathrm{ext}}(\mathbf r_i)
-+\sum_{i<k}U_L(\mathbf r_i-\mathbf r_k).
++\sum_{i\lt k}U_L(\mathbf r_i-\mathbf r_k).
 $$
 
 <a id="eq-periodized-gaussian"></a>
@@ -126,7 +126,7 @@ $$
 对于标量坐标，
 
 $$
-\operatorname{wrap}_L(x)
+\mathrm{wrap}_L(x)
 =x-L\left\lfloor\frac{x}{L}\right\rfloor
 \in[0,L).
 $$
@@ -135,7 +135,7 @@ $$
 中心化位移为
 
 $$
-\operatorname{disp}_L(x,y)
+\mathrm{disp}_L(x,y)
 =(x-y)-L\left\lfloor\frac{x-y}{L}+\frac12\right\rfloor
 \in[-L/2,L/2).
 $$
@@ -188,8 +188,8 @@ $$
 每条被占据的动能链接恰好前进一个切片：
 
 $$
-\operatorname{slice}(\operatorname{next}(b))
-=\operatorname{slice}(b)+1\pmod M.
+\mathrm{slice}(\mathrm{next}(b))
+=\mathrm{slice}(b)+1\pmod M.
 $$
 
 被接受的构型不包含跳过切片的“长链接”。多切片更新会显式插入或移除中间 bead。
@@ -210,7 +210,7 @@ $$
 
 $$
 \Xi(\beta,\mu,L)
-=\operatorname{Tr}\exp[-\beta(H-\mu\hat N)].
+=\mathrm{Tr}\exp[-\beta(H-\mu\hat N)].
 $$
 
 以标记坐标为中间表示，并显式恢复玻色对称性，
@@ -313,7 +313,7 @@ $$
 $$
 
 $$
-\operatorname{Cov}(\widetilde{\mathbf r}_a)
+\mathrm{Cov}(\widetilde{\mathbf r}_a)
 =2\lambda\tau\frac{a(s-a)}{s}I_d.
 $$
 
@@ -324,6 +324,7 @@ $$
 对于改变拓扑的更新，端点图像并不总是从既有段继承。定义精确的周期自由密度
 
 <a id="eq-periodic-free-density"></a>
+
 $$
 \rho_{0,L}(\mathbf r,\mathbf r';s\tau)
 =\sum_{\mathbf k\in\mathbb Z^d}
@@ -343,6 +344,7 @@ $K_s=\sum_{a=0}^{s-1}\log\rho_0^{(\mathbf n_a)}
 (\mathbf r_a,\mathbf r_{a+1};\tau)$ 是所得图像分辨链接的对数权重，则所选取图像、中间卷绕位置与链接图像的联合密度为
 
 <a id="eq-periodic-bridge-mixture"></a>
+
 $$
 Q_L
 =\frac{\exp(K_s)}
@@ -385,8 +387,8 @@ $$
 
 第一个实现恰好允许一个有向开放分量，并使用端点名
 
-- 尾部 $\mathcal M$（**worm_tail**）：产生端，$\operatorname{prev}(\mathcal M)=\mathrm{NONE}$；
-- 头部 $\mathcal I$（**worm_head**）：湮灭端，$\operatorname{next}(\mathcal I)=\mathrm{NONE}$。
+- 尾部 $\mathcal M$（**worm_tail**）：产生端，$\mathrm{prev}(\mathcal M)=\mathrm{NONE}$；
+- 头部 $\mathcal I$（**worm_head**）：湮灭端，$\mathrm{next}(\mathcal I)=\mathrm{NONE}$。
 
 沿正虚时间方向，开放分量从 $\mathcal M$ 遍历到 $\mathcal I$。所有内部 bead 都有一个前驱和一个后继。其他连通分量（如果存在）是闭合环。
 
@@ -405,7 +407,7 @@ $$
 
 $$
 \Delta\mathbf r_{\mathcal M\to\mathcal I}
-=\operatorname{disp}_L(\mathbf r_{\mathcal I},\mathbf r_{\mathcal M}),
+=\mathrm{disp}_L(\mathbf r_{\mathcal I},\mathbf r_{\mathcal M}),
 $$
 
 以及从尾部到头部的正向有向虚时间分离。任何需要未卷绕端点间隔的估计量都必须沿开放链使用图像，而不是中心化位移。
@@ -485,14 +487,14 @@ $$
 
 $$
 \mathbf R_j^-
-=\{\mathbf r_b:\operatorname{slice}(b)=j,
-\operatorname{prev}(b)\ne\mathrm{NONE}\},
+=\{\mathbf r_b:\mathrm{slice}(b)=j,
+\mathrm{prev}(b)\ne\mathrm{NONE}\},
 $$
 
 $$
 \mathbf R_j^+
-=\{\mathbf r_b:\operatorname{slice}(b)=j,
-\operatorname{next}(b)\ne\mathrm{NONE}\}.
+=\{\mathbf r_b:\mathrm{slice}(b)=j,
+\mathrm{next}(b)\ne\mathrm{NONE}\}.
 $$
 
 $\mathbf R_j^-$ 是从区间 $j-1\to j$ 到达的构型，$\mathbf R_j^+$ 是跨越 $j\to j+1$ 离开的构型。任一扇区的对称 primitive 作用量为
@@ -551,7 +553,7 @@ h_s(\mathbf r)=\left\langle
 \mathbf 1_G\,
 \mathbf 1_{\Delta j(\mathcal M\to\mathcal I)=s}\,
 \delta_L^{(d)}\!\left(
-\mathbf r-\operatorname{disp}_L(
+\mathbf r-\mathrm{disp}_L(
 \mathbf r_{\mathcal I},\mathbf r_{\mathcal M})
 \right)
 \right\rangle_{\mathcal Z_{\mathrm W}}.
@@ -709,13 +711,13 @@ K_s=\sum_{a=0}^{s-1}\log\rho_0^{(\mathbf n_a)}
 $$
 
 并令 $p_a$ 表示从完整已配置移动集中选择移动类 $a$ 的、与状态无关的概率。四个移动都使用
-$s\sim\operatorname{Uniform}\{1,\ldots,s_{\max}\}$ 且
+$s\sim\mathrm{Uniform}\{1,\ldots,s_{\max}\}$ 且
 $s_{\max}<M$。一旦启用这一族，每一逆对的两个成员都必须具有正的选择概率。在错误扇区中被选中的移动记为不适用；概率不按扇区重新归一化。
 
 #### Open：（$Z\to G$）
 
 Open 从当前对角图的 $B_Z$ 个 bead 中均匀选取一个 bead $\mathcal I$，并均匀选取 $s$。令
-$\mathcal M=\operatorname{next}^s(\mathcal I)$。$\mathcal I\to\mathcal M$ 上的 $s-1$ 个中间 bead 与全部 $s$ 条链接被移除；保留的 bead 成为头部 $\mathcal I$ 与尾部 $\mathcal M$。由于 $s_{\max}<M$，这不可能删除整个闭合分量。
+$\mathcal M=\mathrm{next}^s(\mathcal I)$。$\mathcal I\to\mathcal M$ 上的 $s-1$ 个中间 bead 与全部 $s$ 条链接被移除；保留的 bead 成为头部 $\mathcal I$ 与尾部 $\mathcal M$。由于 $s_{\max}<M$，这不可能删除整个闭合分量。
 
 正向条件概率为
 
@@ -873,8 +875,8 @@ $$
 #### Swap：（$G\to G$）
 
 Swap 使用固定 bridge 长度 $s_{\rm sw}=s_{\max}$。令当前头部为切片 $j$ 上的 $h$。合法候选集包含切片 $j+s_{\rm sw}\pmod M$ 上的活跃 bead $\alpha$，其前驱链
-$\alpha,\operatorname{prev}(\alpha),\ldots,
-\operatorname{prev}^{s_{\rm sw}}(\alpha)$ 有定义且不包含尾部 $\mathcal M$。定义
+$\alpha,\mathrm{prev}(\alpha),\ldots,
+\mathrm{prev}^{s_{\rm sw}}(\alpha)$ 有定义且不包含尾部 $\mathcal M$。定义
 
 $$
 \Sigma_h(C)=\sum_{\alpha\in\mathcal C_h(C)}
@@ -882,7 +884,7 @@ $$
 $$
 
 候选 $\alpha$ 以其项除以 $\Sigma_h$ 的概率被选取。令
-$\zeta=\operatorname{prev}^{s_{\rm sw}}(\alpha)$。旧段
+$\zeta=\mathrm{prev}^{s_{\rm sw}}(\alpha)$。旧段
 $\zeta\to\alpha$ 具有对数动能权重 $K_{\rm old}$。从 $h$ 到 $\alpha$ 采样一条周期 bridge，它具有新链接对数权重 $K_{\rm new}$。旧段的中间 bead ID 被复用，$h$ 与第一个 bridge bead 相连，$\zeta$ 成为新头部。合并的正向密度为
 
 $$
@@ -988,7 +990,7 @@ $X=(I_Z,I_ZN,I_ZN(N-1),I_ZC_b, I_ZD_l,\ldots)$。
 若其样本均值记为 $(z,n,f,c_b,d_l,\ldots)$，则
 $g_{2,b}= (L/\Delta r_b)c_b z/n^2$，$S_l=d_l/n$。
 每个 block 先平均完整向量，按
-$\operatorname{SE}(F)^2=\nabla F^T\operatorname{Cov}(\bar X_{\rm block})\nabla F/B$
+$\mathrm{SE}(F)^2=\nabla F^T\mathrm{Cov}(\bar X_{\rm block})\nabla F/B$
 传播所有分子与分母的协方差，B 为完整 blocks 数。
 时间片只用于一个构型内的平均，不作为独立 Monte Carlo 样本。
 沿用至少 32 blocks 的三个相邻合格层平台门槛；少于 32 个非零贡献机会不发布 SE。
@@ -1072,7 +1074,7 @@ $$
 $$
 s=(j_{\mathcal I}-j_{\mathcal M})\bmod M,
 \qquad
-\operatorname{disp}_L(x_{\mathcal I},x_{\mathcal M})\in I_a.
+\mathrm{disp}_L(x_{\mathcal I},x_{\mathcal M})\in I_a.
 $$
 
 那么 $\widehat h_{s,a}=H_{s,a}/(K\Delta x)$ 且
@@ -1155,7 +1157,7 @@ ratio standard error 为
 
 <a id="eq-blocking-ratio-standard-error"></a>
 $$
-\operatorname{SE}_B(c r_B)
+\mathrm{SE}_B(c r_B)
 =\frac{|c|}{|\bar d_B|}
 \sqrt{\frac{s_q^2}{n_B}},
 \qquad
@@ -1183,7 +1185,7 @@ checkpoint 续算时，若 measurement 已经开始而历史 moments 不完整�
 在 debug 模式中，每个被接受的改变拓扑的更新至少必须检查：
 
 1. 所有活跃 ID 唯一，且所有被引用的 ID 都活跃；
-2. $\operatorname{next}(b)=c$ 蕴含 $\operatorname{prev}(c)=b$，反之亦然；
+2. $\mathrm{next}(b)=c$ 蕴含 $\mathrm{prev}(c)=b$，反之亦然；
 3. 每条被占链接都前进一个切片模 $M$；
 4. 每条被占链接都有一个有定义的整数图像；
 5. 卷绕坐标位于 $[0,L)$ 内；
