@@ -1,0 +1,33 @@
+# Public repository root allowlist. Other root content stays local.
+/*
+!/.gitignore
+!/README.md
+!/architecture.md
+!/derivations.md
+!/CONTRIBUTING.md
+!/CHANGELOG.md
+!/LICENSE
+!/pyproject.toml
+!/PUBLIC_FILES.md
+!/src/
+!/examples/
+!/docs/
+!/tests/
+!/configs/
+!/validation/
+
+# Generated files inside the public directories.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+.venv/
+venv/
+.env
+.env.*
+*.log

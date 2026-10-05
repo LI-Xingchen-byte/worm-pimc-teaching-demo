@@ -1,0 +1,54 @@
+[system]
+ndim = 1
+box_length = 4.0
+lambda_kin = 0.5
+beta = 1.0
+chemical_potential = -2.0
+
+[discretization]
+n_slices = 16
+action = "primitive"
+
+[potential]
+pair = "periodized_gaussian"
+external = "none"
+epsilon = 1.0
+sigma = 0.5
+image_tolerance = 1.0e-12
+
+[initialization]
+particle_count = 2
+strategy = "straight_worldlines"
+
+[moves]
+steps_per_sweep = 40
+max_segment_links = 6
+displacement_scale = 0.5
+worm_sector_weight = 1.0
+selection_strategy = "all_moves"
+
+[moves.weights]
+wiggle = 4.0
+displace = 1.0
+open = 1.0
+close = 1.0
+insert = 1.0
+remove = 1.0
+advance = 1.0
+recede = 1.0
+swap = 1.0
+
+[estimators]
+green_spatial_bins = 64
+
+[run]
+seed = 97531
+warmup_sweeps = 50
+measurement_sweeps = 100
+measurement_stride = 1
+checkpoint_interval_sweeps = 25
+invariant_check_interval_steps = 1
+
+[output]
+root = "runs"
+label = "worm-sampler"

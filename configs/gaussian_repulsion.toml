@@ -1,0 +1,54 @@
+[system]
+ndim = 1
+box_length = 10.0
+lambda_kin = 0.5
+beta = 2.0
+chemical_potential = -0.5
+
+[discretization]
+n_slices = 64
+action = "primitive"
+
+[potential]
+pair = "periodized_gaussian"
+external = "none"
+epsilon = 1.0
+sigma = 0.5
+image_tolerance = 1.0e-12
+
+[initialization]
+particle_count = 2
+strategy = "straight_worldlines"
+
+[moves]
+steps_per_sweep = 200
+max_segment_links = 8
+displacement_scale = 0.5
+worm_sector_weight = 1.0
+selection_strategy = "all_moves"
+
+[moves.weights]
+wiggle = 2.0
+displace = 1.0
+open = 1.0
+close = 1.0
+insert = 1.0
+remove = 1.0
+advance = 1.0
+recede = 1.0
+swap = 1.0
+
+[estimators]
+green_spatial_bins = 64
+
+[run]
+seed = 34567
+warmup_sweeps = 1000
+measurement_sweeps = 10000
+measurement_stride = 10
+checkpoint_interval_sweeps = 500
+invariant_check_interval_steps = 1
+
+[output]
+root = "runs"
+label = "gaussian-repulsion"

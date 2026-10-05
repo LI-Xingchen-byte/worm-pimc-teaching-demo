@@ -1,0 +1,55 @@
+# Teaching pilot: V(x)=0.5*(1-cos(2*pi*x/L)); short run, not a convergence claim.
+[system]
+ndim = 1
+box_length = 4.0
+lambda_kin = 0.5
+beta = 1.0
+chemical_potential = -0.69999999999999996
+
+[discretization]
+n_slices = 8
+action = "primitive"
+
+[potential]
+pair = "none"
+external = "fourier"
+external_offset = 0.5
+external_cosine = [-0.5]
+external_sine = []
+
+[initialization]
+particle_count = 1
+strategy = "straight_worldlines"
+
+[moves]
+steps_per_sweep = 8
+max_segment_links = 6
+displacement_scale = 0.5
+worm_sector_weight = 1.0
+selection_strategy = "all_moves"
+
+[moves.weights]
+wiggle = 4.0
+displace = 1.0
+open = 1.0
+close = 1.0
+insert = 1.0
+remove = 1.0
+advance = 1.0
+recede = 1.0
+swap = 1.0
+
+[estimators]
+green_spatial_bins = 8
+
+[run]
+seed = 2718
+warmup_sweeps = 128
+measurement_sweeps = 1024
+measurement_stride = 1
+checkpoint_interval_sweeps = 25
+invariant_check_interval_steps = 1
+
+[output]
+root = "runs"
+label = "periodic-external"

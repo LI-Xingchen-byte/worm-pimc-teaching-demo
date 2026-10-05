@@ -1,0 +1,51 @@
+[system]
+ndim = 1
+box_length = 10.0
+lambda_kin = 0.5
+beta = 1.0
+chemical_potential = -4.0
+
+[discretization]
+n_slices = 32
+action = "primitive"
+
+[potential]
+pair = "none"
+external = "none"
+
+[initialization]
+particle_count = 1
+strategy = "straight_worldlines"
+
+[moves]
+steps_per_sweep = 100
+max_segment_links = 8
+displacement_scale = 0.5
+worm_sector_weight = 1.0
+selection_strategy = "all_moves"
+
+[moves.weights]
+wiggle = 1.0
+displace = 1.0
+open = 1.0
+close = 1.0
+insert = 1.0
+remove = 1.0
+advance = 1.0
+recede = 1.0
+swap = 1.0
+
+[estimators]
+green_spatial_bins = 64
+
+[run]
+seed = 12345
+warmup_sweeps = 100
+measurement_sweeps = 1000
+measurement_stride = 10
+checkpoint_interval_sweeps = 100
+invariant_check_interval_steps = 1
+
+[output]
+root = "runs"
+label = "free-particle"
