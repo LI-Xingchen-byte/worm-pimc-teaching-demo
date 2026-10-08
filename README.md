@@ -48,6 +48,17 @@ print(number["mean"], number["standard_error"], number["uncertainty_status"])
 
 ## 示例
 
+也可以打开 [Worm 更新 notebook](examples/worm_walkthrough.ipynb)，在同一页面中阅读
+最短计算、构型数据与九类更新的内嵌图。首次使用在仓库根目录执行：
+
+```shell
+python -m pip install -e ".[notebook]"
+python -m jupyter lab examples/worm_walkthrough.ipynb
+```
+
+选择相应 Python kernel 后从头运行。每组更新独立初始化，支持按组重跑；
+这份静态版本保留接受、拒绝和不适用事件，不需要逐个关闭图窗。
+
 下面的脚本从仓库根目录运行。前三个依次展示计算、单步观察和构型绘图。
 
 | 示例 | 运行命令 | 内容 |

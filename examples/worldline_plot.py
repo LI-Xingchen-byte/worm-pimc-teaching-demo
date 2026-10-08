@@ -160,6 +160,22 @@ def _draw_state(ax, snapshot, tau, changed, highlight, show_ids):
         )
 
 
+def plot_configuration(state, *, tau: float, show_ids: bool = False):
+    """Draw one Configuration or snapshot, without sampling or displaying it."""
+
+    snapshot = state.snapshot() if hasattr(state, "snapshot") else state
+    if snapshot["positions"].shape[1] != 1:
+        raise ValueError("plot_configuration currently supports only 1D configurations")
+    if not math.isfinite(tau) or tau <= 0:
+        raise ValueError("tau must be positive and finite")
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots(figsize=(6, 4.5), layout="constrained")
+    _draw_state(ax, snapshot, tau, set(), "#287bb5", show_ids)
+    ax.set(ylabel="Imaginary time", title=f"Worldline configuration  [{snapshot['sector']}]")
+    return fig
+
+
 def plot_step(event: StepResult, *, tau: float, show_ids: bool = False, external=None):
     """Plot before / candidate / actual after and return a Matplotlib Figure.
 

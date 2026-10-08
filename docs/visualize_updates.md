@@ -1,5 +1,10 @@
 # 逐步查看 Worm 更新
 
+希望把图和代码放在同一页面时，打开
+[Worm 更新 notebook](../examples/worm_walkthrough.ipynb)。它包含最短计算、
+构型表、九类更新及接受判断的静态内嵌图。安装与启动方法见 [README](../README.md#示例)。
+各组使用独立 seed 和 simulation，保存的候选包括被拒绝的更新。
+
 先安装可选绘图依赖。也可用 `--config configs/periodic_external.toml` 加载周期外势，
 在每个世界线面板下显示同空间坐标的势能曲线。密度剖面与新示例见
 [周期外势与密度剖面](periodic_external.md)。

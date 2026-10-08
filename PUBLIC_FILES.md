@@ -6,7 +6,7 @@
 | 内容 | 用途 |
 |---|---|
 | `src/wormpimc/`、`pyproject.toml` | 库实现与安装配置 |
-| `examples/` | 五个基础教学脚本和共享绘图辅助 |
+| `examples/` | 基础教学脚本、Worm 更新 notebook 和共享显示辅助 |
 | `docs/` | 使用、运行与验证专题 |
 | `README.md`、`architecture.md`、`derivations.md` | 入口、实现结构和物理定义 |
 | `tests/`、`configs/`、`validation/` | 回归检查、配置与独立参考 |
