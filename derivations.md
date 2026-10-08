@@ -29,15 +29,15 @@ $$
 | $d$ | **ndim** | 空间维度；第一个实现中 $d=1$ |
 | $N$ | **n_particles** | 闭合、对角构型中的物理粒子数 |
 | $m$ | **mass** | 玻色子质量；通常通过 $\lambda$ 表示，而非单独存储 |
-| $\lambda$ | **lambda_kin** | 动能系数，$\lambda=\hbar^2/(2m)$；$\lambda\tau$ 具有长度平方的单位 |
+| $\lambda$ | **lambda_kin** | 动能系数， $\lambda=\hbar^2/(2m)$ ； $\lambda\tau$  具有长度平方的单位 |
 | $T$ | **temperature** | 温度 |
 | $\beta$ | **beta** | 逆温度，代码单位下 $\beta=1/T$ |
 | $\mu$ | **chemical_potential** | 化学势；其符号以 $+\mu\int N(\tau')\,d\tau'$ 进入权重 |
 | $L$ | **box_length** | 一维环的周长 |
-| $\Lambda$ | **box** | 周期空间域，$[0,L)^d$ |
+| $\Lambda$ | **box** | 周期空间域， $[0,L)^d$ |
 | $M$ | **n_slices** | 虚时间切片数 |
-| $\tau$ | **tau** | 时间步长，$\tau=\beta/M$ |
-| $j$ | **slice_id** | 切片索引，$j\in\{0,\ldots,M-1\}$ |
+| $\tau$ | **tau** | 时间步长， $\tau=\beta/M$ |
+| $j$ | **slice_id** | 切片索引， $j\in\{0,\ldots,M-1\}$ |
 | $\mathbf R_j$ | **positions_on_slice(j)** | 切片 $j$ 上的全部坐标 |
 | $V(\mathbf R)$ | **potential_energy** | 总的外势加对势能量 |
 | $\rho_0$ | **free_density_matrix** | 自由粒子短时密度矩阵 |
@@ -61,7 +61,7 @@ $$
 $$
 H_N=-\lambda\sum_{i=1}^{N}\nabla_i^2
     +\sum_{i=1}^{N}V_{\mathrm{ext}}(\mathbf r_i)
-    +\sum_{1\le i<k\le N}U_L(\mathbf r_i-\mathbf r_k).
+    +\sum_{1\le i\lt k\le N}U_L(\mathbf r_i-\mathbf r_k).
 $$
 
 构型 $\mathbf R=(\mathbf r_1,\ldots,\mathbf r_N)$ 的总势能为
@@ -69,7 +69,7 @@ $$
 $$
 V(\mathbf R)
 =\sum_i V_{\mathrm{ext}}(\mathbf r_i)
-+\sum_{i<k}U_L(\mathbf r_i-\mathbf r_k).
++\sum_{i\lt k}U_L(\mathbf r_i-\mathbf r_k).
 $$
 
 <a id="eq-periodized-gaussian"></a>
@@ -126,7 +126,7 @@ $$
 对于标量坐标，
 
 $$
-\operatorname{wrap}_L(x)
+\mathrm{wrap}_L(x)
 =x-L\left\lfloor\frac{x}{L}\right\rfloor
 \in[0,L).
 $$
@@ -135,7 +135,7 @@ $$
 中心化位移为
 
 $$
-\operatorname{disp}_L(x,y)
+\mathrm{disp}_L(x,y)
 =(x-y)-L\left\lfloor\frac{x-y}{L}+\frac12\right\rfloor
 \in[-L/2,L/2).
 $$
@@ -188,8 +188,8 @@ $$
 每条被占据的动能链接恰好前进一个切片：
 
 $$
-\operatorname{slice}(\operatorname{next}(b))
-=\operatorname{slice}(b)+1\pmod M.
+\mathrm{slice}(\mathrm{next}(b))
+=\mathrm{slice}(b)+1\pmod M.
 $$
 
 被接受的构型不包含跳过切片的“长链接”。多切片更新会显式插入或移除中间 bead。
@@ -210,7 +210,7 @@ $$
 
 $$
 \Xi(\beta,\mu,L)
-=\operatorname{Tr}\exp[-\beta(H-\mu\hat N)].
+=\mathrm{Tr}\exp[-\beta(H-\mu\hat N)].
 $$
 
 以标记坐标为中间表示，并显式恢复玻色对称性，
@@ -313,7 +313,7 @@ $$
 $$
 
 $$
-\operatorname{Cov}(\widetilde{\mathbf r}_a)
+\mathrm{Cov}(\widetilde{\mathbf r}_a)
 =2\lambda\tau\frac{a(s-a)}{s}I_d.
 $$
 
@@ -324,6 +324,7 @@ $$
 对于改变拓扑的更新，端点图像并不总是从既有段继承。定义精确的周期自由密度
 
 <a id="eq-periodic-free-density"></a>
+
 $$
 \rho_{0,L}(\mathbf r,\mathbf r';s\tau)
 =\sum_{\mathbf k\in\mathbb Z^d}
@@ -343,6 +344,7 @@ $K_s=\sum_{a=0}^{s-1}\log\rho_0^{(\mathbf n_a)}
 (\mathbf r_a,\mathbf r_{a+1};\tau)$ 是所得图像分辨链接的对数权重，则所选取图像、中间卷绕位置与链接图像的联合密度为
 
 <a id="eq-periodic-bridge-mixture"></a>
+
 $$
 Q_L
 =\frac{\exp(K_s)}
@@ -385,8 +387,8 @@ $$
 
 第一个实现恰好允许一个有向开放分量，并使用端点名
 
-- 尾部 $\mathcal M$（**worm_tail**）：产生端，$\operatorname{prev}(\mathcal M)=\mathrm{NONE}$；
-- 头部 $\mathcal I$（**worm_head**）：湮灭端，$\operatorname{next}(\mathcal I)=\mathrm{NONE}$。
+- 尾部 $\mathcal M$（**worm_tail**）：产生端， $\mathrm{prev}(\mathcal M)=\mathrm{NONE}$；
+- 头部 $\mathcal I$（**worm_head**）：湮灭端， $\mathrm{next}(\mathcal I)=\mathrm{NONE}$。
 
 沿正虚时间方向，开放分量从 $\mathcal M$ 遍历到 $\mathcal I$。所有内部 bead 都有一个前驱和一个后继。其他连通分量（如果存在）是闭合环。
 
@@ -405,7 +407,7 @@ $$
 
 $$
 \Delta\mathbf r_{\mathcal M\to\mathcal I}
-=\operatorname{disp}_L(\mathbf r_{\mathcal I},\mathbf r_{\mathcal M}),
+=\mathrm{disp}_L(\mathbf r_{\mathcal I},\mathbf r_{\mathcal M}),
 $$
 
 以及从尾部到头部的正向有向虚时间分离。任何需要未卷绕端点间隔的估计量都必须沿开放链使用图像，而不是中心化位移。
@@ -436,9 +438,7 @@ $$
 
 Worm 端点测度约定遵循 Boninsegni--Prokof'ev--Svistunov，
 *Phys. Rev. E* **74**, 036701 (2006)，第 II A--B 节，尤其式
-(2.6)--(2.24)，但保留第 4 节与第 8 节的图像分辨周期几何。用于本次推导的本地 PDF 的 SHA-256 为
-`80f5d7511c894081c6ae9612324e38790c6bbf6baf46151cf474510a3d702f77`；
-结构预检发现 16 个已声明、已枚举且可读的页面，无解析器警告。
+(2.6)--(2.24)，但保留第 4 节与第 8 节的图像分辨周期几何。
 
 令 $g_M(\mathbf r_{\mathcal I},j_{\mathcal I};
 \mathbf r_{\mathcal M},j_{\mathcal M})$ 为玻色 Green 函数未归一化的离散分子，使得
@@ -453,6 +453,7 @@ $$
 端点测度固定为对两个端点切片求和、对两个端点位置做 Lebesgue 积分的未归一化形式。因此
 
 <a id="eq-worm-extended-measure"></a>
+
 $$
 \mathcal Z_{\mathrm W}
 =\Xi_M+C_G
@@ -473,6 +474,7 @@ $$
 $C_G$ 是一个算法系数，不影响归一化的 $Z$ 扇区可观测量。面向用户的调节参数是无量纲正数 $C_0$，名为 **worm_sector_weight**。对于第 12.2 节的均匀提议族，项目定义
 
 <a id="eq-worm-sector-coefficient"></a>
+
 $$
 C_G=\frac{C_0}{VM s_{\max}}.
 $$
@@ -485,19 +487,20 @@ $$
 
 $$
 \mathbf R_j^-
-=\{\mathbf r_b:\operatorname{slice}(b)=j,
-\operatorname{prev}(b)\ne\mathrm{NONE}\},
+=\{\mathbf r_b:\mathrm{slice}(b)=j,
+\mathrm{prev}(b)\ne\mathrm{NONE}\},
 $$
 
 $$
 \mathbf R_j^+
-=\{\mathbf r_b:\operatorname{slice}(b)=j,
-\operatorname{next}(b)\ne\mathrm{NONE}\}.
+=\{\mathbf r_b:\mathrm{slice}(b)=j,
+\mathrm{next}(b)\ne\mathrm{NONE}\}.
 $$
 
-$\mathbf R_j^-$ 是从区间 $j-1\to j$ 到达的构型，$\mathbf R_j^+$ 是跨越 $j\to j+1$ 离开的构型。任一扇区的对称 primitive 作用量为
+$\mathbf R_j^-$ 是从区间 $j-1\to j$ 到达的构型， $\mathbf R_j^+$ 是跨越 $j\to j+1$ 离开的构型。任一扇区的对称 primitive 作用量为
 
 <a id="eq-worm-primitive-action"></a>
+
 $$
 S_V(C)=\frac{\tau}{2}\sum_{j=0}^{M-1}
 \left[V(\mathbf R_j^-)+V(\mathbf R_j^+)\right].
@@ -510,6 +513,7 @@ $\mathbf R_{j_{\mathcal I}}^-$ 包含头部。在 $Z$ 扇区，这两个集合�
 相对于下文固定的图测度，任一扇区的绝对对数密度为
 
 <a id="eq-worm-log-weight"></a>
+
 $$
 \log W(C)=
 \sum_{\ell\in\mathcal L(C)}\log\rho_0^{(\mathbf n_\ell)}
@@ -551,7 +555,7 @@ h_s(\mathbf r)=\left\langle
 \mathbf 1_G\,
 \mathbf 1_{\Delta j(\mathcal M\to\mathcal I)=s}\,
 \delta_L^{(d)}\!\left(
-\mathbf r-\operatorname{disp}_L(
+\mathbf r-\mathrm{disp}_L(
 \mathbf r_{\mathcal I},\mathbf r_{\mathcal M})
 \right)
 \right\rangle_{\mathcal Z_{\mathrm W}}.
@@ -561,6 +565,7 @@ $$
 $P_Z=\langle\mathbf1_Z\rangle_{\mathcal Z_{\mathrm W}}$ 因此给出
 
 <a id="eq-green-residence-normalization"></a>
+
 $$
 G_M(\mathbf r,s\tau)
 =\frac{h_s(\mathbf r)}{P_Z C_G M V}.
@@ -673,6 +678,7 @@ $$
 由于 bridge 密度是 $s$ 个自由链接传播子的乘积除以固定端点传播子，它的比会消去所修改段上的完整动能目标之比。粒子数、扇区、移动选择概率与图测度都保持不变。只有在逐分量记录完这种消去之后，才可使用
 
 <a id="eq-wiggle-log-ratio"></a>
+
 $$
 \log R_{\rm W}
 =-\tau\sum_{j\in J_{\rm W}}
@@ -687,6 +693,7 @@ $-\boldsymbol\delta$，具有相同的密度 $(2\Delta)^{-d}$ 与相同的
 $1/n_{\rm cyc}$ 分量概率。因此提议比为 1，动能比为 1，且
 
 <a id="eq-displace-log-ratio"></a>
+
 $$
 \log R_{\rm D}
 =-\tau\sum_{j\in J_{\rm D}}
@@ -709,13 +716,13 @@ K_s=\sum_{a=0}^{s-1}\log\rho_0^{(\mathbf n_a)}
 $$
 
 并令 $p_a$ 表示从完整已配置移动集中选择移动类 $a$ 的、与状态无关的概率。四个移动都使用
-$s\sim\operatorname{Uniform}\{1,\ldots,s_{\max}\}$ 且
+$s\sim\mathrm{Uniform}\{1,\ldots,s_{\max}\}$ 且
 $s_{\max}<M$。一旦启用这一族，每一逆对的两个成员都必须具有正的选择概率。在错误扇区中被选中的移动记为不适用；概率不按扇区重新归一化。
 
-#### Open：（$Z\to G$）
+#### Open：（ $Z\to G$ ）
 
 Open 从当前对角图的 $B_Z$ 个 bead 中均匀选取一个 bead $\mathcal I$，并均匀选取 $s$。令
-$\mathcal M=\operatorname{next}^s(\mathcal I)$。$\mathcal I\to\mathcal M$ 上的 $s-1$ 个中间 bead 与全部 $s$ 条链接被移除；保留的 bead 成为头部 $\mathcal I$ 与尾部 $\mathcal M$。由于 $s_{\max}<M$，这不可能删除整个闭合分量。
+$\mathcal M=\mathrm{next}^s(\mathcal I)$。$\mathcal I\to\mathcal M$ 上的 $s-1$ 个中间 bead 与全部 $s$ 条链接被移除；保留的 bead 成为头部 $\mathcal I$ 与尾部 $\mathcal M$。由于 $s_{\max}<M$，这不可能删除整个闭合分量。
 
 正向条件概率为
 
@@ -736,6 +743,7 @@ $$
 $+K_s$；这两者只在两者都被记录后才消去。Open 移除 $s$ 条被占链接，因此 $\Delta\log W_\mu=-\mu\tau s$。完整的简化比为
 
 <a id="eq-open-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm op}
@@ -751,13 +759,14 @@ $$
 
 没有任何端点距离截断属于目标或提议。如果将来把它作为效率过滤器引入，它必须作为两个方向上的支撑限制出现，并接受单独的推导。
 
-#### Close：（$G\to Z$）
+#### Close：（ $G\to Z$ ）
 
 Close 计算从头部 $\mathcal I$ 到尾部 $\mathcal M$ 的正向模间隔。只有当这个间隔是唯一的 $s\in\{1,\ldots,s_{\max}\}$ 时才适用。随后它从第 8.1 节的周期 bridge 混合中采样总端点图像与 $s-1$ 个中间 bead，并插入全部 $s$ 条图像分辨链接。令 $B_Z'$ 为所得对角图的 bead 数。新链接对数权重为 $K_s$。
 
 正向 bridge 密度为 $\exp(K_s)/\rho_{0,L}$，反向 Open 选择为 $1/(B_Z's_{\max})$。Close 增加 $s$ 条被占链接。因此
 
 <a id="eq-close-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm cl}
@@ -774,7 +783,7 @@ $$
 对于一个精确的正向 Open patch 与其反向 Close patch，
 $B_Z'=B_Z$，两者的作用量变化符号相反，且每个目标与提议分量都分别消去。
 
-#### Insert：（$Z\to G$）
+#### Insert：（ $Z\to G$ ）
 
 Insert 创建一个具有 $s$ 条链接与 $s+1$ 个 bead 的新开放分量。它依次选择
 
@@ -794,6 +803,7 @@ $$
 动能目标与自由随机游走提议因子消去。Insert 增加 $s$ 条被占链接，给出
 
 <a id="eq-insert-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm ins}
@@ -805,11 +815,12 @@ $$
 
 采用第 10.1 节 $C_G=C_0/(VMs_{\max})$ 的约定，第一项就是 $\log C_0$。
 
-#### Remove：（$G\to Z$）
+#### Remove：（ $G\to Z$ ）
 
 只有当唯一的开放分量实际链接数 $s\in\{1,\ldots,s_{\max}\}$ 时才适用 Remove。使用的是实际有向链接数，而不仅是端点的模切片间隔。开放分量的全部 $s+1$ 个 bead 与其 $s$ 条链接被删除。反向 Insert 概率密度在被删除的尾部位置、切片、长度、链接图像与 bead 位置上求值；确定性 bead 分配器不贡献概率。
 
 <a id="eq-remove-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm rm}
@@ -834,7 +845,7 @@ $$
 
 ### 12.3 Advance/Recede 与 Swap 族
 
-#### Advance：（$G\to G$）
+#### Advance：（ $G\to G$ ）
 
 Advance 从 $1,\ldots,s_{\max}$ 中均匀选取 $s$，并从当前头部 $\mathcal I$ 向前生长开放分量。它采样 $s$ 个图像分辨自由步，创建 $s$ 个新 bead 与链接，并让最终 bead 成为新头部。以 $K_s$ 为新增动能对数权重，
 
@@ -847,6 +858,7 @@ $$
 动能目标与自由游走密度消去，同时增加 $s$ 条被占链接：
 
 <a id="eq-advance-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm ad}
@@ -855,11 +867,12 @@ $$
 }.
 $$
 
-#### Recede：（$G\to G$）
+#### Recede：（ $G\to G$ ）
 
 Recede 均匀选取 $s$，并删除头部紧后方的最后 $s$ 条链接及它们的末端 bead。只有当开放分量严格多于 $s$ 条链接时才适用；消除整个开放分量属于 Remove。精确的反向 Advance 密度在被删除的位置与图像上求值。因此
 
 <a id="eq-recede-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm re}
@@ -870,11 +883,11 @@ $$
 
 实际有向链接数对适用性具有权威性。模切片差无法区分一个短分量与一个缠绕虚时间圆柱的分量。
 
-#### Swap：（$G\to G$）
+#### Swap：（ $G\to G$ ）
 
 Swap 使用固定 bridge 长度 $s_{\rm sw}=s_{\max}$。令当前头部为切片 $j$ 上的 $h$。合法候选集包含切片 $j+s_{\rm sw}\pmod M$ 上的活跃 bead $\alpha$，其前驱链
-$\alpha,\operatorname{prev}(\alpha),\ldots,
-\operatorname{prev}^{s_{\rm sw}}(\alpha)$ 有定义且不包含尾部 $\mathcal M$。定义
+$\alpha,\mathrm{prev}(\alpha),\ldots,
+\mathrm{prev}^{s_{\rm sw}}(\alpha)$ 有定义且不包含尾部 $\mathcal M$。定义
 
 $$
 \Sigma_h(C)=\sum_{\alpha\in\mathcal C_h(C)}
@@ -882,7 +895,7 @@ $$
 $$
 
 候选 $\alpha$ 以其项除以 $\Sigma_h$ 的概率被选取。令
-$\zeta=\operatorname{prev}^{s_{\rm sw}}(\alpha)$。旧段
+$\zeta=\mathrm{prev}^{s_{\rm sw}}(\alpha)$。旧段
 $\zeta\to\alpha$ 具有对数动能权重 $K_{\rm old}$。从 $h$ 到 $\alpha$ 采样一条周期 bridge，它具有新链接对数权重 $K_{\rm new}$。旧段的中间 bead ID 被复用，$h$ 与第一个 bridge bead 相连，$\zeta$ 成为新头部。合并的正向密度为
 
 $$
@@ -893,6 +906,7 @@ $$
 $\exp(K_{\rm old})/\Sigma_\zeta(C')$ 重建旧段。动能与 bridge 因子消去，链接占据不变，Swap 是其自身的逆类。因此
 
 <a id="eq-swap-log-ratio"></a>
+
 $$
 \boxed{
 \log R_{\rm sw}
@@ -939,6 +953,7 @@ $$
 对于平移不变的一维周期系统，定义
 
 <a id="eq-equal-time-g2"></a>
+
 $$
 g_2(r)
 =\frac{L}{\langle N\rangle_Z^2}
@@ -986,16 +1001,16 @@ $k=0$ 值包含巨正则数涨落，不应把它当作普通非零波矢结构�
 等时关联的 all-opportunity 向量为
 $X=(I_Z,I_ZN,I_ZN(N-1),I_ZC_b, I_ZD_l,\ldots)$。
 若其样本均值记为 $(z,n,f,c_b,d_l,\ldots)$，则
-$g_{2,b}= (L/\Delta r_b)c_b z/n^2$，$S_l=d_l/n$。
+$g_{2,b}= (L/\Delta r_b)c_b z/n^2$， $S_l=d_l/n$。
 每个 block 先平均完整向量，按
-$\operatorname{SE}(F)^2=\nabla F^T\operatorname{Cov}(\bar X_{\rm block})\nabla F/B$
+$\mathrm{SE}(F)^2=\nabla F^T\mathrm{Cov}(\bar X_{\rm block})\nabla F/B$
 传播所有分子与分母的协方差，B 为完整 blocks 数。
 时间片只用于一个构型内的平均，不作为独立 Monte Carlo 样本。
 沿用至少 32 blocks 的三个相邻合格层平台门槛；少于 32 个非零贡献机会不发布 SE。
 这是渐近 delta method，短链仍可能受比值偏差和未解析慢相关影响。
 
 本次独立理想参考在有限盒中取
-$n_p=[e^{\beta(\lambda(2\pi p/L)^2-\mu)}-1]^{-1}$、$\mu<0$，给出
+$n_p=[e^{\beta(\lambda(2\pi p/L)^2-\mu)}-1]^{-1}$、 $\mu<0$，给出
 $g_2(r)=1+|\sum_p n_p e^{i2\pi p r/L}|^2/\langle N\rangle^2$ 和
 $S_l=1+\sum_p n_p n_{p+l}/\langle N\rangle$。
 对 g2 的每个 Fourier 项进行 bin 积分，核对的是有限-bin 平均而非中心点值。
@@ -1031,9 +1046,10 @@ Q_2(C)=\sum_{\ell\in\mathcal L(C)}
 \left|\Delta\mathbf r_\ell^{(\mathbf n_\ell)}\right|^2.
 $$
 
-在固定 $M$、$\mu$ 与 $L$ 下，用 $\tau=\beta/M$ 对完整的归一化 primitive 权重求导，得
+在固定 $M$、 $\mu$ 与 $L$ 下，用 $\tau=\beta/M$ 对完整的归一化 primitive 权重求导，得
 
 <a id="eq-thermodynamic-energy-estimator"></a>
+
 $$
 K_{\mathrm{th}}(C)
 =\frac{dN(C)}{2\tau}
@@ -1047,7 +1063,7 @@ V_{\mathrm{prim}}(C)
 E_{\mathrm{th}}(C)=K_{\mathrm{th}}(C)+V_{\mathrm{prim}}(C).
 $$
 
-$\langle H\rangle$ 定义中的 $+\mu\langle N\rangle$ 项逐构型地消去了 $e^{\beta\mu N}$ 的导数。$Q_2$ 中的所有位移都使用存储的链接图像；把它们替换成中心化最小图像位移会给出错误的绕数贡献。这些估计量只在扇区 $Z$ 中累积，并使用元数据变体
+$\langle H\rangle$ 定义中的 $+\mu\langle N\rangle$ 项逐构型地消去了 $e^{\beta\mu N}$ 的导数。 $Q_2$ 中的所有位移都使用存储的链接图像；把它们替换成中心化最小图像位移会给出错误的绕数贡献。这些估计量只在扇区 $Z$ 中累积，并使用元数据变体
 **primitive_thermodynamic_kinetic** 和 **primitive_thermodynamic_total**。热力学估计量的方差随 $M$ 增大；未来的 centroid-virial 估计量可能改善统计，但不得静默替换此参考公式。
 
 ### 13.6 单体密度矩阵
@@ -1072,13 +1088,14 @@ $$
 $$
 s=(j_{\mathcal I}-j_{\mathcal M})\bmod M,
 \qquad
-\operatorname{disp}_L(x_{\mathcal I},x_{\mathcal M})\in I_a.
+\mathrm{disp}_L(x_{\mathcal I},x_{\mathcal M})\in I_a.
 $$
 
 那么 $\widehat h_{s,a}=H_{s,a}/(K\Delta x)$ 且
 $\widehat P_Z=K_Z/K$。应用第 10.4 节给出 bin 平均估计量
 
 <a id="eq-green-histogram-estimator"></a>
+
 $$
 \widehat G_{M,a}(s\tau)
 =\frac{H_{s,a}}
@@ -1095,6 +1112,7 @@ $$
 则无量纲单体密度矩阵的有限时间近似为
 
 <a id="eq-g1-beta-minus-estimator"></a>
+
 $$
 \widehat g_{1,M,a}^{(\beta^-)}
 =\frac{\widehat G_{M,a}((M-1)\tau)}{\widehat\rho}.
@@ -1154,8 +1172,9 @@ $r_B=\bar x_B/\bar d_B$，并定义线性化残差 $q_b=x_b-r_Bd_b$。该层的
 ratio standard error 为
 
 <a id="eq-blocking-ratio-standard-error"></a>
+
 $$
-\operatorname{SE}_B(c r_B)
+\mathrm{SE}_B(c r_B)
 =\frac{|c|}{|\bar d_B|}
 \sqrt{\frac{s_q^2}{n_B}},
 \qquad
@@ -1183,7 +1202,7 @@ checkpoint 续算时，若 measurement 已经开始而历史 moments 不完整�
 在 debug 模式中，每个被接受的改变拓扑的更新至少必须检查：
 
 1. 所有活跃 ID 唯一，且所有被引用的 ID 都活跃；
-2. $\operatorname{next}(b)=c$ 蕴含 $\operatorname{prev}(c)=b$，反之亦然；
+2. $\mathrm{next}(b)=c$ 蕴含 $\mathrm{prev}(c)=b$，反之亦然；
 3. 每条被占链接都前进一个切片模 $M$；
 4. 每条被占链接都有一个有定义的整数图像；
 5. 卷绕坐标位于 $[0,L)$ 内；
